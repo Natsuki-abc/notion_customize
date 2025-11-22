@@ -6,8 +6,7 @@ $(function() {
 
   /**
    * 1.Outlineをサイドバーに表示
-   * @type {boolean}
-   * @param {string} name
+   *
    */
   function addOutlineToSidebar() {
     let outlineContainer = null;
@@ -91,8 +90,7 @@ $(function() {
 
   /**
    * 2. 画面topへのボタンを右下に作成
-   * @type {boolean}
-   * @param {string} name
+   *
    */
   function addScrollToTopButton() {
     const button = document.createElement('button');
@@ -163,8 +161,7 @@ $(function() {
 
   /**
    * 4. コードブロックに行番号を表示
-   * @type {boolean}
-   * @param {string} name
+   *
    */
   function addLineNumbersToCodeBlocks() {
     const processedBlocks = new WeakSet();
@@ -232,8 +229,7 @@ $(function() {
 
   /**
    * 5. コードブロック内でスペルチェックを実行
-   * @type {boolean}
-   * @param {string} name
+   *
    */
   function enableSpellCheckInCodeBlocks() {
     const observer = new MutationObserver(() => {
@@ -260,8 +256,7 @@ $(function() {
 
   /**
    * 6. 箇条書きリストに垂直のインデント行を表示
-   * @type {boolean}
-   * @param {string} name
+   *
    */
   function addVerticalIndentLinesToList() {
     const style = document.createElement('style');
@@ -287,8 +282,7 @@ $(function() {
 
   /**
    * 7. TODOリストに垂直のインデント行を表示
-   * @type {boolean}
-   * @param {string} name
+   *
    */
   function addVerticalIndentLinesToTodos() {
     const style = document.createElement('style');
@@ -314,8 +308,7 @@ $(function() {
 
   /**
    * 8. 全てのページからコメントセクションの削除
-   * @type {boolean}
-   * @param {string} name
+   *
    */
   function removeCommentSections() {
     const observer = new MutationObserver(() => {

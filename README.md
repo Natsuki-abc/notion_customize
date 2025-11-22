@@ -6,9 +6,12 @@ NotionのUIをカスタマイズするためのChrome拡張機能です。
 
 ## 機能
 
+実装済み
+* **Noto Sansフォント**: フォントがDefaultの場合、Noto Sans JP/Noto Sansを使用します
+
+実装前
 * **Outlineをサイドバーに表示**: ページの見出しを自動的に抽出し、右側に固定表示される目次を表示します
 * **画面topへのボタン**: 右下にスクロールトップボタンを表示します（300px以上スクロールで表示）
-* **Noto Sansフォント**: フォントがDefaultの場合、Noto Sans JP/Noto Sansを使用します
 * **コードブロックに行番号表示**: コードブロックに自動的に行番号を追加します
 * **コードブロック内でスペルチェック**: コードブロック内でもスペルチェックが有効になります
 * **箇条書きリストに垂直のインデント行**: 箇条書きリストの項目間に垂直線を表示します
@@ -27,10 +30,11 @@ NotionのUIをカスタマイズするためのChrome拡張機能です。
 
 ```
 notion_customize/
-├── manifest.json    # 拡張機能の設定ファイル
-├── content.js       # Notionページに注入されるスクリプト
-├── styles.css       # カスタムスタイル
-└── README.md        # このファイル
+├── manifest.json        # 拡張機能の設定ファイル
+├── content.js           # 処理を記載
+├── styles.css
+├── jquery-3.7.1.min.js  # jQueryを使用
+└── README.md
 ```
 
 ## 使用方法
