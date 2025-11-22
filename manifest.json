@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "Notion Customize",
+  "version": "1.0.1",
+  "description": "NotionのUIをカスタマイズするChrome拡張機能",
+  "permissions": [
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://www.notion.so/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://www.notion.so/*"],
+      "js": ["jquery-3.7.1.min.js", "content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["styles.css"],
+      "matches": ["https://www.notion.so/*"]
+    }
+  ]
+}

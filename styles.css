@@ -1,0 +1,212 @@
+/* Outline in Sidebar */
+.notion-customize-outline {
+  position: fixed;
+  top: 60px;
+  right: 20px;
+  width: 250px;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  background: white;
+  border: 1px solid rgba(55, 53, 47, 0.16);
+  border-radius: 4px;
+  padding: 12px;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  .notion-customize-outline {
+    background: #2e2e2e;
+    border-color: rgba(255, 255, 255, 0.16);
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .notion-customize-outline-link {
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  .notion-customize-outline-link:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+.notion-customize-outline-header {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(55, 53, 47, 0.16);
+}
+
+.notion-customize-outline-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.notion-customize-outline-link {
+  display: block;
+  padding: 4px 8px;
+  color: rgba(55, 53, 47, 0.65);
+  text-decoration: none;
+  font-size: 13px;
+  border-radius: 3px;
+  transition: background-color 0.2s;
+  cursor: pointer;
+}
+
+.notion-customize-outline-link:hover {
+  background-color: rgba(55, 53, 47, 0.08);
+  color: rgba(55, 53, 47, 0.9);
+}
+
+.notion-customize-outline-link.level-1 {
+  font-weight: 600;
+  padding-left: 8px;
+}
+
+.notion-customize-outline-link.level-2 {
+  padding-left: 16px;
+}
+
+.notion-customize-outline-link.level-3 {
+  padding-left: 24px;
+  font-size: 12px;
+}
+
+.notion-customize-outline-link.level-4 {
+  padding-left: 32px;
+  font-size: 12px;
+}
+
+.notion-customize-outline-link.level-5 {
+  padding-left: 40px;
+  font-size: 11px;
+}
+
+.notion-customize-outline-link.level-6 {
+  padding-left: 48px;
+  font-size: 11px;
+}
+
+/* Scroll to Top Button */
+.notion-customize-scroll-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: rgba(55, 53, 47, 0.8);
+  color: white;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.notion-customize-scroll-to-top:hover {
+  background-color: rgba(55, 53, 47, 1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.notion-customize-scroll-to-top:active {
+  transform: translateY(0);
+}
+
+/* Code Block Line Numbers */
+.notion-customize-code-wrapper {
+  position: relative;
+  display: flex;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.notion-customize-line-numbers-container {
+  background-color: rgba(55, 53, 47, 0.05);
+  padding: 12px 8px;
+  border-right: 1px solid rgba(55, 53, 47, 0.16);
+  user-select: none;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(55, 53, 47, 0.4);
+  text-align: right;
+  min-width: 40px;
+  flex-shrink: 0;
+}
+
+.notion-customize-line-number {
+  padding: 0 4px;
+  height: 1.5em;
+  display: block;
+  white-space: nowrap;
+}
+
+.notion-customize-line-numbers {
+  flex: 1;
+  overflow-x: auto;
+}
+
+@media (prefers-color-scheme: dark) {
+  .notion-customize-line-numbers-container {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-right-color: rgba(255, 255, 255, 0.16);
+    color: rgba(255, 255, 255, 0.4);
+  }
+}
+
+/* List and Todo Indent Lines */
+.notion-list-item,
+.notion-list-item-container,
+.notion-to-do-item,
+.notion-to-do-block,
+[class*="notion-list-item"],
+[class*="notion-to-do"] {
+  position: relative;
+}
+
+.notion-list-item:not(:last-child)::after,
+.notion-list-item-container:not(:last-child)::after,
+.notion-to-do-item:not(:last-child)::after,
+.notion-to-do-block:not(:last-child)::after,
+[class*="notion-list-item"]:not(:last-child)::after,
+[class*="notion-to-do"]:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 12px;
+  top: 1.5em;
+  bottom: -0.5em;
+  width: 1px;
+  background-color: rgba(55, 53, 47, 0.16);
+  z-index: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .notion-list-item:not(:last-child)::after,
+  .notion-list-item-container:not(:last-child)::after,
+  .notion-to-do-item:not(:last-child)::after,
+  .notion-to-do-block:not(:last-child)::after,
+  [class*="notion-list-item"]:not(:last-child)::after,
+  [class*="notion-to-do"]:not(:last-child)::after {
+    background-color: rgba(255, 255, 255, 0.16);
+  }
+}
+
+/* Hide Comment Sections */
+[data-block-id*="comment"]:not([data-block-id*="comment-button"]):not(button),
+.notion-comments,
+[class*="comment-section"],
+[class*="comments-container"],
+[aria-label*="Comment"][aria-label*="section"],
+[aria-label*="Comments"] {
+  display: none !important;
+}
