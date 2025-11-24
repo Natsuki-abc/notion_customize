@@ -94,13 +94,13 @@
 /* Scroll to Top Button */
 .notion-customize-scroll-to-top {
   position: fixed;
-  bottom: 30px;
-  right: 30px;
-  width: 48px;
-  height: 48px;
+  bottom: 20px;
+  right: 90px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  background-color: rgba(55, 53, 47, 0.8);
-  color: white;
+  background-color: #d3d3d3;
+  color: rgba(55, 53, 47, 0.8);
   border: none;
   font-size: 24px;
   cursor: pointer;
@@ -113,13 +113,7 @@
 }
 
 .notion-customize-scroll-to-top:hover {
-  background-color: rgba(55, 53, 47, 1);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.notion-customize-scroll-to-top:active {
-  transform: translateY(0);
+  background-color: #a19f9f;
 }
 
 /* Code Block Line Numbers */

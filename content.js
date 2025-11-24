@@ -93,25 +93,31 @@ $(function() {
    *
    */
   function addScrollToTopButton() {
-    const button = document.createElement('button');
-    button.className = 'notion-customize-scroll-to-top';
-    button.innerHTML = '↑';
-    button.setAttribute('aria-label', 'ページトップへ戻る');
-    button.style.display = 'none';
-
-    button.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    const $scrollToTopButton = $('<button>', {
+      class: 'notion-customize-scroll-to-top',
+      html: '↑',
+      'aria-label': 'ページトップへ戻る'
     });
 
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 300) {
-        button.style.display = 'block';
-      } else {
-        button.style.display = 'none';
-      }
+    // $scrollToTopButton.on('click', () => {
+    //   $('html, body').animate({ scrollTop: 0 }, 'slow');
+    // });
+    $scrollToTopButton.on('click', () => {
+      let $scrollTarget = $(document.scrollingElement || document.documentElement);
+      $scrollTarget.stop(true).animate({ scrollTop: 0 }, 500, () => {
+        $scrollTarget.prop('scrollTop', 0); // 念のため最終位置を固定
+      });
     });
 
-    document.body.appendChild(button);
+    // $(window).on('scroll', () => {
+    //   if ($(window).scrollTop() > 100) {
+    //     $button.show();
+    //   } else {
+    //     $button.hide();
+    //   }
+    // });
+
+    $('body').append($scrollToTopButton);
   }
 
   /**
@@ -344,7 +350,6 @@ $(function() {
     }
 
     addOutlineToSidebar();
-    addScrollToTopButton();
     applyNotoSansFont();
     addLineNumbersToCodeBlocks();
     enableSpellCheckInCodeBlocks();
@@ -363,7 +368,14 @@ $(function() {
     }
   }).observe(document, { subtree: true, childList: true });
 
-  init();
+  addOutlineToSidebar();
+  addScrollToTopButton();
+  applyNotoSansFont();
+  addLineNumbersToCodeBlocks();
+  enableSpellCheckInCodeBlocks();
+  addVerticalIndentLinesToList();
+  addVerticalIndentLinesToTodos();
+  removeCommentSections();
   console.log('一番外：1回だけ実行されるはず');
 
 });
