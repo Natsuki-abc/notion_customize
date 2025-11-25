@@ -2,6 +2,7 @@ $(function() {
 
   // 要素定義
   const notionApp = '#notion-app';
+  const notionScroller = '.notion-scroller';
   const notionPageContent = '.notion-page-content';
 
   /**
@@ -93,31 +94,23 @@ $(function() {
    *
    */
   function addScrollToTopButton() {
-    const $scrollToTopButton = $('<button>', {
-      class: 'notion-customize-scroll-to-top',
-      html: '↑',
-      'aria-label': 'ページトップへ戻る'
-    });
+    onNotionPageContentReady(notionScroller, ($notionScroller) => {
+      const $scrollTarget = $notionScroller.first();
 
-    // $scrollToTopButton.on('click', () => {
-    //   $('html, body').animate({ scrollTop: 0 }, 'slow');
-    // });
-    $scrollToTopButton.on('click', () => {
-      let $scrollTarget = $(document.scrollingElement || document.documentElement);
-      $scrollTarget.stop(true).animate({ scrollTop: 0 }, 500, () => {
-        $scrollTarget.prop('scrollTop', 0); // 念のため最終位置を固定
+      const $scrollToTopButton = $('<button>', {
+        class: 'notion-customize-scroll-to-top',
+        html: '↑',
+        'aria-label': 'ページトップへ戻る'
+      }).hide().appendTo('body');
+
+      $scrollToTopButton.on('click', () => {
+        $scrollTarget.stop(true).animate({ scrollTop: 0 }, 500);
+      });
+
+      $scrollTarget.on('scroll', () => {
+        $scrollToTopButton.toggle($scrollTarget.scrollTop() > 300);
       });
     });
-
-    // $(window).on('scroll', () => {
-    //   if ($(window).scrollTop() > 100) {
-    //     $button.show();
-    //   } else {
-    //     $button.hide();
-    //   }
-    // });
-
-    $('body').append($scrollToTopButton);
   }
 
   /**
@@ -125,35 +118,7 @@ $(function() {
    *
    */
   function applyNotoSansFont() {
-
-    function onNotionPageContentReady(callback) {
-      // 初期ロード時にすでに存在している場合
-      if ($(notionPageContent).length > 0) {
-        callback($(notionPageContent));
-        console.log('初期ロード');
-
-        return;
-      }
-
-      // MutationObserverで監視
-      const observer = new MutationObserver((mutations) => {
-        console.log('監視中');
-
-        if ($(notionPageContent).length > 0) {
-          console.log('見つかった');
-
-          observer.disconnect(); // 見つかったら停止
-          callback($(notionPageContent));
-        }
-      });
-
-      observer.observe(document.body, {
-        childList: true,
-        subtree: true,
-      });
-    }
-
-    onNotionPageContentReady(($notionPageContent) => {
+    onNotionPageContentReady(notionPageContent, ($notionPageContent) => {
       console.log("Notionページコンテンツが描画されました:", $notionPageContent);
 
       // フォント「Serif」を選択している場合は、return
@@ -377,5 +342,36 @@ $(function() {
   addVerticalIndentLinesToTodos();
   removeCommentSections();
   console.log('一番外：1回だけ実行されるはず');
+
+  /**
+   * ページ監視用の共通関数
+   *
+   */
+  function onNotionPageContentReady(selector, callback) {
+    // 初期ロード時にすでに存在している場合
+    if ($(selector).length > 0) {
+      callback($(selector));
+      console.log('初期ロード');
+
+      return;
+    }
+
+    // MutationObserverで監視
+    const observer = new MutationObserver((mutations) => {
+      console.log('監視中');
+
+      if ($(selector).length > 0) {
+        console.log('見つかった');
+
+        observer.disconnect(); // 見つかったら停止
+        callback($(selector));
+      }
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+  }
 
 });
