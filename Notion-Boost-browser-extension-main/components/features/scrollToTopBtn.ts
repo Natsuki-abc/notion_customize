@@ -38,7 +38,8 @@ export function scrollTopBtn(isEnabled: boolean) {
 // Internal methods //
 
 function bindScrollEventToDoc() {
-  docElement = getElement('.notion-frame > .notion-scroller');
+  docElement = getElement('.notion-frame .notion-scroller');
+
   docElement.addEventListener('scroll', handleScrollEvent);
   adjustBtnVisibilty();
   console.log('added bindScrollEventToDoc');
@@ -56,10 +57,9 @@ function addScrollTopBtn() {
   getElement(notionFrameCls).after(toElement(btnHTML));
   console.log('inserted scroll btn div');
   scrollBtn = getElement('.scroll-top-btn');
-  // scrollTopBtn.classList.add(btnCls);
+
   // add onclick event
   scrollBtn.addEventListener('click', scrollToTop);
-  adjustBtnVisibilty();
 
   // add scroll event to doc
   bindScrollEventToDoc();
