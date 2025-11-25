@@ -1,0 +1,73 @@
+$btn-shadow-light: rgba(15, 15, 15, 0.1) 0px 0px 0px 1px,
+  rgba(15, 15, 15, 0.1) 0px 2px 4px;
+$btn-shadow-dark: rgba(15, 15, 15, 0.2) 0px 0px 0px 1px,
+  rgba(15, 15, 15, 0.2) 0px 2px 4px;
+
+$themes: (
+  light: (
+    color: rgba(55, 53, 47, 0.6),
+    color2: rgba(55, 53, 47, 0.4),
+    colorSolid: rgb(55, 53, 47),
+    fill: rgba(55, 53, 47, 0.6),
+    background: rgba(55, 53, 47, 0.08),
+    background-image:
+      linear-gradient(
+        to right,
+        rgba(55, 53, 47, 0.16) 0%,
+        rgba(55, 53, 47, 0.16) 100%
+      ),
+    floating-btn-bg: white,
+    floating-btn-hover-bg: rgb(239, 239, 238),
+    floating-btn-shadow: $btn-shadow-light,
+    table-header: rgb(239, 239, 239),
+    table-cell: white,
+    table-cell-hover: rgb(239, 239, 238),
+  ),
+  dark: (
+    color: rgb(155, 155, 155),
+    color2: rgba(255, 255, 255, 0.4),
+    colorSolid: rgba(255, 255, 255, 0.9),
+    fill: rgb(155, 155, 155),
+    background: rgba(255, 255, 255, 0.055),
+    background-image:
+      linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.14) 0%,
+        rgba(255, 255, 255, 0.14) 100%
+      ),
+    floating-btn-bg: rgb(80, 85, 88),
+    floating-btn-hover-bg: rgb(98, 102, 104),
+    floating-btn-shadow: $btn-shadow-dark,
+    table-header: rgb(71, 76, 80),
+    table-cell: rgb(47, 52, 55),
+    table-cell-hover: rgb(98, 102, 104),
+  ),
+);
+
+/*
+ * Implementation of themes
+ */
+@mixin themify() {
+  @each $theme, $map in $themes {
+    // set element colors based on notion theme
+    //class: .notion-dark-theme / .notion-light-theme
+    .notion-#{$theme}-theme & {
+      $theme-map: () !global;
+      @each $key, $submap in $map {
+        $value: map-get(map-get($themes, $theme), "#{$key}");
+        $theme-map: map-merge(
+          $theme-map,
+          (
+            $key: $value,
+          )
+        ) !global;
+      }
+      @content;
+      $theme-map: null !global;
+    }
+  }
+}
+
+@function themed($key) {
+  @return map-get($theme-map, $key);
+}
