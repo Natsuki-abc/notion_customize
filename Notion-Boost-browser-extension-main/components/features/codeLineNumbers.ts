@@ -131,8 +131,7 @@ function updateCodeline(block: any) {
         numbers = toElement('<span class="code-line-numbers"></span>');
 
         const blockStyle = window.getComputedStyle(block.children[0]);
-        numbers.style.top = blockStyle.paddingTop;
-        numbers.style.bottom = blockStyle.paddingBottom;
+        numbers.style.top = '36px';
 
         block.append(numbers);
 
