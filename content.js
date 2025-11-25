@@ -6,7 +6,7 @@ $(function() {
   const notionPageContent = '.notion-page-content';
 
   /**
-   * 1.Outlineをサイドバーに表示
+   * 1. Outlineをサイドバーに表示
    *
    */
   function addOutlineToSidebar() {
@@ -90,7 +90,7 @@ $(function() {
   }
 
   /**
-   * 2. 画面topへのボタンを右下に作成
+   * 2. 画面topへのスクロールボタンを右下に作成
    *
    */
   function addScrollToTopButton() {
