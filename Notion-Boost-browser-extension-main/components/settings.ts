@@ -27,6 +27,7 @@ export const defaultSettings = {
     borderOnImages: false,
     disableSlashCommandPlaceholder: false,
     disableAiAfterSpaceKey: false,
+    changeDefaultFont: false,
 };
 
 export const settingDetails = [
@@ -166,6 +167,11 @@ export const settingDetails = [
         func: 'borderOnImages',
         name: 'Add frame to images',
         desc: 'Add frame around images to make them easily noticeable on page',
+    },
+    {
+        func: 'changeDefaultFont',
+        name: 'Change Default Font to Noto Sans JP',
+        desc: '',
     },
 
     // step 2 of 2: add function name and description

@@ -2,6 +2,7 @@ import { getElement, isObserverType, onElementLoaded, simulateKey } from '../uti
 
 const notionAiBtnCls = '[role=button].notion-ai-button';
 const notionAppId = '#notion-app';
+const notionPageContent = '.notion-page-content';
 
 // To add theme based color: check indentationLines sass class
 
@@ -152,6 +153,29 @@ export function bolderTextInDark(isEnabled: boolean) {
                         el.classList.remove('bolder');
                     }
                     // console.log(`${notionAppInner} style is ${el.style.display}`);
+                }
+                return null;
+            })
+            .catch((e) => console.log(e));
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+export function changeDefaultFont(isEnabled: boolean) {
+    try {
+        console.log(`feature: changeDefaultFont: ${isEnabled}`);
+
+        onElementLoaded(notionPageContent)
+            .then((isPresent) => {
+                if (isPresent) {
+                    const el = getElement(notionPageContent);
+                    // フォントがSerifのページは変更しない
+                    if (isEnabled && !el.style.fontFamily.includes('YuMincho')) {
+                        getElement(notionAppId).classList.add('noto-sans-jp');
+                    } else {
+                        getElement(notionAppId).classList.remove('noto-sans-jp');
+                    }
                 }
                 return null;
             })
