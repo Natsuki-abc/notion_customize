@@ -719,6 +719,33 @@ $caret-color-dark-theme: rgb(255, 255, 255);
         }
     }
 
+    .notion-header-block,
+    .notion-sub_header-block,
+    .notion-sub_sub_header-block,
+    .notion-toggle-block {
+        > div > div > div:first-child {
+            margin-top: 4.5px !important;
+        }
+
+        > div > div > div:last-child:has(> div:nth-last-child(n + 2)) {
+            position: relative;
+        }
+    }
+
+    .notion-header-block,
+    .notion-sub_header-block,
+    .notion-sub_sub_header-block,
+    .notion-toggle-block {
+        > div > div > div:last-child:has(> div:nth-last-child(n + 2))::before {
+            content: '';
+            position: absolute;
+            height: calc(100% - 2em);
+            top: 2em;
+            left: -15px;
+            width: 1px;
+        }
+    }
+
     // add color based on theme
     .notion-light-theme {
         .notion-bulleted_list-block,
@@ -728,10 +755,30 @@ $caret-color-dark-theme: rgb(255, 255, 255);
             }
         }
     }
+    .notion-light-theme {
+        .notion-header-block,
+        .notion-sub_header-block,
+        .notion-sub_sub_header-block,
+        .notion-toggle-block {
+            > div > div > div:last-child:has(> div:nth-last-child(n + 2))::before {
+                background: rgba($caret-color-light-theme, 0.2);
+            }
+        }
+    }
     .notion-dark-theme {
         .notion-bulleted_list-block,
         .notion-to_do-block {
             > div > div:last-child::before {
+                background: rgba($caret-color-dark-theme, 0.2);
+            }
+        }
+    }
+    .notion-dark-theme {
+        .notion-header-block,
+        .notion-sub_header-block,
+        .notion-sub_sub_header-block,
+        .notion-toggle-block {
+            > div > div > div:last-child:has(> div:nth-last-child(n + 2))::before {
                 background: rgba($caret-color-dark-theme, 0.2);
             }
         }

@@ -14,6 +14,7 @@ NotionのUIをカスタマイズするためのChrome拡張機能です。<br>
 追加した機能
 
 * フォントがDefaultの場合、Noto Sans JPを使用
+* 「Add indentation lines to lists」をトグルopen時も線が表示されるよう改修
 
 ### インストール方法
 
