@@ -12,34 +12,34 @@ import {
 
   let pageChangeObserverObj = {};
   let docEditObserverObj = {};
-  
+
   // ENABLE/DISABLE Console Logs
   const DEBUG = false;
-  
+
   // keep classes in hierarchy of DOM
-  
+
   // stays on doc change
   const notionFrameCls = ".notion-frame";
   const outlineFrameCls = ".nb-outline";
-  
+
   // these gets removed on doc change
   const notionScrollerCls = ".notion-frame .notion-scroller.vertical";
   const notionPageContentCls = ".notion-page-content";
-  
+
   // starting point
   export function displayOutline(isShow: boolean) {
     console.log(`feature: displayOutline: ${isShow}`);
-  
+
     if (isShow) {
       console.log("setting up outline feature");
-  
+
       // triggers on page load
       // it waits for doc to be loaded
       onElementLoaded(notionPageContentCls)
         .then((isPresent) => {
           if (isPresent) {
             // addOutlineFrame();
-  
+
             addOutlineToggleBtn();
             addOutline();
             docEditListener();
@@ -57,11 +57,11 @@ import {
       removeOutline();
     }
   }
-  
+
   function addOutlineToggleBtn() {
     try {
       const outlineToggleBtn = "outlineToggleBtn";
-  
+
       const addOutlineToNotion = () => {
         const siblingCls = ".notion-topbar-share-menu";
         console.log("add outline btn");
@@ -72,7 +72,7 @@ import {
               console.log("no page content class");
               return;
             }
-  
+
             // eslint-disable-next-line promise/always-return
             if (isPresent) {
               if (document.querySelector(`.${outlineToggleBtn}`)) {
@@ -83,7 +83,7 @@ import {
               const btnEl = toElement(
                 `<div class=${outlineToggleBtn} role="button" title="Show/hide outline" tabindex="-1">Outline</div>`
               );
-  
+
               btnEl.addEventListener("click", () => {
                 console.log("yup");
                 const el = document.querySelector(".nb-outline");
@@ -92,13 +92,13 @@ import {
                   el.classList.toggle("show");
                 }
               });
-  
+
               sibling?.parentNode?.insertBefore(btnEl, sibling);
             }
           })
           .catch((e) => console.log(e));
       };
-  
+
       const addOutlineToNotionSubdomain = () => {
         const siblingCls = ".notion-topbar > div > div.notion-focusable";
         console.log("add outline btn");
@@ -109,7 +109,7 @@ import {
               console.log("no page content class");
               return;
             }
-  
+
             // eslint-disable-next-line promise/always-return
             if (isPresent) {
               if (document.querySelector(`.${outlineToggleBtn}`)) {
@@ -120,7 +120,7 @@ import {
               const btnEl = toElement(
                 `<div class=${outlineToggleBtn} role="button" title="Show/hide outline" tabindex="-1">Outline</div>`
               );
-  
+
               btnEl.addEventListener("click", () => {
                 const el = document.querySelector(".nb-outline");
                 if (el) {
@@ -128,86 +128,86 @@ import {
                   el.classList.toggle("show");
                 }
               });
-  
+
               sibling?.parentNode?.insertBefore(btnEl, sibling);
             }
           })
           .catch((e) => console.log(e));
       };
-  
+
       addOutlineToNotion();
       addOutlineToNotionSubdomain();
     } catch (e:any) {
       console.log("Error: ", e.message);
     }
   }
-  
+
   function removeDocEditListener() {
     if (isObserverType(docEditObserverObj)) {
       console.log("disconnected docEditObserver");
       (docEditObserverObj as MutationObserver).disconnect();
     }
   }
-  
+
   function removeOutline() {
     console.log("removing outline feature...");
-  
+
     removeDocEditListener();
-  
+
     removePageChangeListener(pageChangeObserverObj);
-  
+
     clearOutline();
-  
+
     removeOutlineToggleBtn();
-  
+
     console.log("removed outline feature");
   }
-  
+
   function removeOutlineToggleBtn() {
     const btn = document.querySelector(".outlineToggleBtn");
-  
+
     if (btn) {
       btn.remove();
     }
   }
   function hideOutline() {
     const outline = getElement(outlineFrameCls);
-  
+
     if (!outline) return;
     outline.classList.remove("show");
   }
-  
+
   function clearOutline() {
     hideOutline();
-  
+
     const outline = getElement(outlineFrameCls);
     if (outline) {
       console.log("removed outline div");
       outline.remove();
     }
   }
-  
+
   function addOutline() {
     DEBUG && console.log("adding/updating OUTLINE");
-  
+
     try {
       const pageContent = getElement(notionPageContentCls);
       if (!pageContent) {
         console.log("no page content class");
         return;
       }
-  
+
       const fullPageTable = getElement(".notion-peek-renderer");
       if (fullPageTable && fullPageTable.querySelector(notionPageContentCls)) {
         console.log("don't show outline for full page tables");
         return;
       }
-  
+
       const notionScrollerEl = getElement(notionScrollerCls);
-  
+
       // check if it outline exist already
       let outlineEl = getElement(outlineFrameCls);
-  
+
       if (!outlineEl || outlineEl.length === 0) {
         // do not add any space between closing and ending of `
         outlineEl = toElement(`
@@ -220,10 +220,10 @@ import {
             </div>
           </div>
           </div>`);
-  
+
         // add toc container
         notionScrollerEl.parentNode.insertBefore(outlineEl, notionScrollerEl);
-  
+
         document.getElementById("nbScrollToTop")?.addEventListener("click", () => {
           const doc = document.querySelector(".notion-frame > .notion-scroller");
           if (doc) {
@@ -231,12 +231,12 @@ import {
           }
         });
       }
-  
+
       const blockWrapperEl = outlineEl.querySelector(".block-wrapper");
-  
+
       // empty any previous headings
       removeChildren(blockWrapperEl);
-  
+
       const tocBlockHTML = `<div class="block">
          <a
            href=""
@@ -250,18 +250,18 @@ import {
            </div>
          </a>
        </div>`;
-  
+
       let block = "";
-  
+
       let isHeadingsFound = false;
-  
+
       // select all divs containing headings
       const pageHeadings = getElements(
         `${notionPageContentCls} [class$="header-block"]`
       );
-  
+
       isHeadingsFound = pageHeadings.length > 0;
-  
+
       const contains = {
         h1: false,
         h2: false,
@@ -335,7 +335,7 @@ import {
         // if (text.length > 20) {
         //   block.querySelector(".btn").title = text;
         // }
-  
+
         // add href
         const blockId = pageHeading
           .getAttribute("data-block-id")
@@ -349,10 +349,10 @@ import {
             window.location.pathname
           }#${e.currentTarget.getAttribute("hash")}`;
         });
-  
+
         blockWrapperEl.appendChild(block);
       }
-  
+
       // hide outline if there is no heading
       if (!isHeadingsFound) {
         console.log("no heading found so removing outline frame");
@@ -382,18 +382,19 @@ import {
             });
           }
         }
-  
-        if (!outlineEl.classList.contains("disableForPage")) {
-          outlineEl.classList.add("show");
-        }
+
+        // 初期表示時はサイドバーのアウトラインを非表示
+        // if (!outlineEl.classList.contains("disableForPage")) {
+        //   outlineEl.classList.add("show");
+        // }
       }
     } catch (e:any) {
       console.error("Error: ", e.message);
     }
   }
-  
+
   // UTILITY FUNCTIONS
-  
+
   // add/update outline if any heading change occurs
   function docEditListener() {
     DEBUG && console.log("listening for doc edit changes...");
@@ -505,10 +506,10 @@ import {
       });
     }
   }
-  
+
   function isHeading(placeholder:string) {
     // check if the change was related to headings
-  
+
     if (!placeholder || !placeholder.trim()) {
       return true;
     }
@@ -518,7 +519,6 @@ import {
         return true;
       }
     });
-  
+
     return false;
   }
-  
