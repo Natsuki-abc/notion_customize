@@ -10,6 +10,7 @@ import { spellcheckForCode } from '../components/features/spellCheckForCode';
 import { defaultSettings } from '../components/settings';
 import { getLatestSettings, isEmpty } from '../components/utils';
 import { hideAiBtn, hideTableOfContents } from '../components/features/pageElements';
+import { changeDefaultFont } from '../components/features/pageElements';
 
 let featureList: any = {};
 
@@ -24,6 +25,7 @@ featureList.openFullPage = openFullPage;
 featureList.rollupUrlClickable = rollupUrlClickable;
 featureList.hideAiBtn = hideAiBtn;
 featureList.hideTableOfContents = hideTableOfContents;
+featureList.changeDefaultFont = changeDefaultFont;
 
 export default defineContentScript({
     matches: ['*://*.notion.so/*', '*://*.notion.site/*'],

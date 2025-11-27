@@ -1,4 +1,4 @@
-import { getElement, isObserverType, onElementLoaded, simulateKey } from '../utils';
+import { getElement, isObserverType, onElementLoaded, pageChangeListener, removePageChangeListener, simulateKey } from '../utils';
 
 const notionAiBtnCls = '[role=button].notion-ai-button';
 const notionAppId = '#notion-app';
@@ -8,6 +8,7 @@ const notionPageContent = '.notion-page-content';
 
 const notionCursorListenerCls = '.notion-cursor-listener';
 let titleObserver = {};
+let pageChangeObserverObj = {};
 export function hideComments(isEnabled: boolean) {
     try {
         console.log(`feature: hideComments: ${isEnabled}`);
@@ -152,6 +153,8 @@ export function bolderTextInDark(isEnabled: boolean) {
                     } else {
                         el.classList.remove('bolder');
                     }
+                    console.log('bolderテキスト完了');
+
                     // console.log(`${notionAppInner} style is ${el.style.display}`);
                 }
                 return null;
@@ -162,24 +165,64 @@ export function bolderTextInDark(isEnabled: boolean) {
     }
 }
 
+// フォント変更のロジックを実行する関数
+function applyDefaultFont(isEnabled: boolean) {
+    try {
+        const $notionAppId = getElement(notionAppId);
+        const $notionPageContent = getElement(notionPageContent);
+
+        if (!$notionAppId || !$notionPageContent) {
+            return;
+        }
+
+        console.log(`フォントファミリー：${$notionPageContent.style.fontFamily}`);
+
+        // フォントがSerifのページは変更しない
+        if (isEnabled && !$notionPageContent.style.fontFamily.includes('YuMincho')) {
+            $notionAppId.classList.add('noto-sans-jp');
+        } else {
+            $notionAppId.classList.remove('noto-sans-jp');
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 export function changeDefaultFont(isEnabled: boolean) {
     try {
         console.log(`feature: changeDefaultFont: ${isEnabled}`);
 
-        onElementLoaded(notionPageContent)
-            .then((isPresent) => {
-                if (isPresent) {
-                    const el = getElement(notionPageContent);
-                    // フォントがSerifのページは変更しない
-                    if (isEnabled && !el.style.fontFamily.includes('YuMincho')) {
-                        getElement(notionAppId).classList.add('noto-sans-jp');
-                    } else {
-                        getElement(notionAppId).classList.remove('noto-sans-jp');
+        if (isEnabled) {
+            // 初期実行
+            onElementLoaded(notionPageContent)
+                .then((isPresent) => {
+                    if (isPresent) {
+                        applyDefaultFont(isEnabled);
+
+                        // ページ遷移のたびに実行されるようにリスナーを設定
+                        pageChangeObserverObj = pageChangeListener(
+                            [], // callbacksAfterDocReady
+                            [() => applyDefaultFont(isEnabled)] // callbacksAfterContentReady
+                        );
                     }
-                }
-                return null;
-            })
-            .catch((e) => console.log(e));
+                    return null;
+                })
+                .catch((e) => console.log(e));
+        } else {
+            // 無効化時はリスナーを削除し、クラスも削除
+            removePageChangeListener(pageChangeObserverObj);
+            onElementLoaded(notionAppId)
+                .then((isPresent) => {
+                    if (isPresent) {
+                        const $notionAppId = getElement(notionAppId);
+                        if ($notionAppId) {
+                            $notionAppId.classList.remove('noto-sans-jp');
+                        }
+                    }
+                    return null;
+                })
+                .catch((e) => console.log(e));
+        }
     } catch (e) {
         console.log(e);
     }

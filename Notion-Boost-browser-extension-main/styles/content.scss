@@ -36,7 +36,11 @@ $caret-color-dark-theme: rgb(255, 255, 255);
 
 // Noto Sans JP
 .noto-sans-jp {
-    font-family: 'Noto Sans JP', 'Noto Sans', sans-serif !important;
+    // headerを除外して、ページコンテンツにのみ適用
+    .notion-page-content,
+    .notion-page-content * {
+        font-family: 'Noto Sans JP', 'Noto Sans', sans-serif !important;
+    }
 }
 
 // set outline toggle btn
