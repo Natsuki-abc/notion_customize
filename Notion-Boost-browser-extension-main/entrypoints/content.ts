@@ -28,7 +28,7 @@ featureList.hideTableOfContents = hideTableOfContents;
 featureList.changeDefaultFont = changeDefaultFont;
 
 export default defineContentScript({
-    matches: ['*://*.notion.so/*', '*://*.notion.site/*'],
+    matches: ['*://*.notion.com/*', '*://*.notion.site/*'],
     main() {
         init();
 
